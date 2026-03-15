@@ -699,15 +699,32 @@ function toggleD(id) {
 
 function filterC(v) {
     const low = v.toLowerCase();
-    document.querySelectorAll('.cat-items li').forEach(li => {
-        li.style.display = li.textContent.toLowerCase().includes(low) ? 'block' : 'none';
+    const list = document.getElementById('cList');
+    const categories = document.querySelectorAll('#cItems > div');
+    
+    // Auto-show list when typing
+    list.style.display = v.trim() !== "" ? 'block' : 'none';
+
+    categories.forEach(cat => {
+        const items = cat.querySelectorAll('li');
+        let hasMatch = false;
+        items.forEach(li => {
+            if (li.textContent.toLowerCase().includes(low)) {
+                li.style.display = 'block';
+                hasMatch = true;
+            } else {
+                li.style.display = 'none';
+            }
+        });
+        // Hides the map header if no dinos match
+        cat.style.display = hasMatch ? 'block' : 'none';
     });
-    document.getElementById('cList').style.display = 'block';
 }
 
 function filterS(v) {
     const low = v.toLowerCase();
     const sel = document.getElementById('saddleSelector');
+    // Fixes the "undefined" error by using correct data keys
     sel.innerHTML = SADDLES
         .filter(x => x.name.toLowerCase().includes(low))
         .map(x => `<option value="${x.path}">${x.name}</option>`)
@@ -740,12 +757,14 @@ async function executeSuite() {
         cmd = `Scriptcommand SpawnDinoInBall -p=${id} -t=${selP} -f=${g} -b=1 -i=1 -a=1 -s=255,255,255,255,255,255,255,255`;
         log = {title: "Creature Log", fields: [{name:"ID", value:id, inline:true}, {name:"Dino", value:selN, inline:true}, {name:"Note", value:note}], color: 43519};
     } 
-    else if(suiteMode === 'saddle') {
+else if(suiteMode === 'saddle') {
         const saddleP = document.getElementById('saddleSelector').value;
         if(!saddleP) return alert("Select a Saddle first");
         const isBP = document.getElementById('isBP').checked ? 1 : 0;
+        // Uses the correct variable 'saddleP'
         cmd = `giveitemtoplayer ${id} ${saddleP} 1 100 ${isBP}`;
-    } 
+    }
+
     else if(suiteMode === 'bp') {
         const questVal = document.getElementById('questSelect').value;
         if(!questVal) return alert("Select a Quest");
