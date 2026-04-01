@@ -130,8 +130,8 @@
             </div>
             <div class="mb-6" id="groupSelectBox"><label class="input-label">Select Group</label><select id="groupName" class="input-style"></select></div>
             <div id="timedBox" class="hidden grid grid-cols-2 gap-4 mb-6">
-                <div><label class="input-label">Duration (Hours)</label><input type="number" id="hours" value="24" class="input-style"></div>
-                <div><label class="input-label">Delay (Hours)</label><input type="number" id="delay" value="0" class="input-style"></div>
+                <div><label class="input-label">Duration (Days)</label><input type="number" id="days" value="1" class="input-style"></div>
+ <div><label class="input-label">Delay (Hours)</label><input type="number" id="delay" value="0" class="input-style"></div>
             </div>
         </div>
 
@@ -286,7 +286,7 @@ const CREATURES = {
     {n: "Fasola", p: "/Game/ASA/Dinos/Fasolasuchus/Fasola_Character_BP.Fasola_Character_BP", c: "c-sco"},
     {n: "Jerboa", p: "/Game/ScorchedEarth/Dinos/Jerboa/Jerboa_Character_BP.Jerboa_Character_BP", c: "c-sco"},
     {n: "Lymantria", p: "/Game/ScorchedEarth/Dinos/Moth/Moth_Character_BP.Moth_Character_BP", c: "c-sco"},
-    {n: "Mantis", p: "/Game/PrimalEarth/Dinos/Mantis/Mantis_Character_BP.Mantis_Character_BP", c: "c-sco"},
+    {n: "Mantis", p: "/Game/ScorchedEarth/Dinos/Mantis/Mantis_Character_BP.Mantis_Character_BP", c: "c-sco"},
     {n: "Morellatops", p: "/Game/ScorchedEarth/Dinos/Morellatops/Morellatops_Character_BP.Morellatops_Character_BP", c: "c-sco"},
     {n: "Phoenix", p: "/Game/ScorchedEarth/Dinos/Phoenix/Phoenix_Character_BP.Phoenix_Character_BP", c: "c-sco"},
     {n: "Rock Golem", p: "/Game/ScorchedEarth/Dinos/RockGolem/RockGolem_Character_BP.RockGolem_Character_BP", c: "c-sco"},
@@ -782,28 +782,38 @@ async function executeSuite() {
         cmd = `Scriptcommand SpawnDinoInBall -p=${id} -t=${selP} -f=${g} -b=1 -i=1 -a=1 -s=255,255,255,255,255,255,255,255`;
         log = {title: "Creature Log", fields: [{name:"ID", value:id, inline:true}, {name:"Dino", value:selN, inline:true}, {name:"Note", value:note}], color: 43519};
     } 
-else if(suiteMode === 'saddle') {
+    else if(suiteMode === 'saddle') {
         const saddleP = document.getElementById('saddleSelector').value;
         if(!saddleP) return alert("Select a Saddle first");
         const isBP = document.getElementById('isBP').checked ? 1 : 0;
-        // Uses the correct variable 'saddleP'
         cmd = `giveitemtoplayer ${id} ${saddleP} 1 100 ${isBP}`;
     }
-
     else if(suiteMode === 'bp') {
         const questVal = document.getElementById('questSelect').value;
         if(!questVal) return alert("Select a Quest");
         cmd = questVal.split('|').map(v => `BattlePass.AddProgress ${id} ${v}`).join('\n');
-    } 
+    }
     else if(suiteMode === 'perm') {
         const grp = document.getElementById('groupName').value;
-        if(permType === 'add') cmd = `Permissions.Add ${id} ${grp}`;
-        else if(permType === 'remove') cmd = `Permissions.Remove ${id} ${grp}`;
-        else if(permType === 'addtimed') cmd = `Permissions.AddTimed ${id} ${grp} ${document.getElementById('hours').value} ${document.getElementById('delay').value}`;
-        else if(permType === 'removetimed') cmd = `Permissions.RemoveTimed ${id} ${grp}`;
-        else if(permType === 'list') cmd = `Permissions.PlayerGroups ${id}`;
-        else if(permType === 'reload') cmd = `Permissions.reload`;
-    }
+        const delay = document.getElementById('delay').value;
+        
+        if(permType === 'add') {
+            cmd = `Permissions.Add ${id} ${grp}`;
+        } else if(permType === 'remove') {
+            cmd = `Permissions.Remove ${id} ${grp}`;
+        } else if(permType === 'addtimed') {
+            // Converts Days input into Hours (Day * 24)
+            const dayVal = document.getElementById('days').value;
+            const totalHours = dayVal * 24;
+            cmd = `Permissions.AddTimed ${id} ${grp} ${totalHours} ${delay}`;
+        } else if(permType === 'removetimed') {
+            cmd = `Permissions.RemoveTimed ${id} ${grp}`;
+        } else if(permType === 'list') {
+            cmd = `Permissions.PlayerGroups ${id}`;
+        } else if(permType === 'reload') {
+            cmd = `Permissions.reload`;
+        }
+}
 
     updateOutput(cmd);
     if(log) sendLog(log);
