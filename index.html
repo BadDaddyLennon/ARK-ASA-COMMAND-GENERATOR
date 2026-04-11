@@ -140,13 +140,46 @@
         </div>
 
         <div id="pane-enf" class="hidden">
-            <div class="section-box" style="border-left-color: #ff0000; background: rgba(255, 0, 0, 0.05);">
+<div class="section-box" style="border-left-color: #ff0000; background: rgba(255, 0, 0, 0.05);">
                 <h3 class="input-label !text-red-500">Fix Tribe</h3>
                 <div class="flex gap-3">
                     <input type="text" id="enfFixID" placeholder="Tribe ID to Fix" class="input-style">
                     <button onclick="genEnforcer('fix')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 rounded font-['Orbitron']">GENERATE</button>
                 </div>
                 <p class="text-[10px] text-gray-500 mt-2 italic uppercase">Note: Use this only if a tribe file becomes corrupted or stuck.</p>
+            </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 border-t border-white/10 pt-6">
+                <div>
+                    <h3 class="input-label !text-gold mb-4">Frequently Asked Questions</h3>
+                    <div class="text-[11px] space-y-4">
+                        <div>
+                            <p class="text-green-400 font-bold uppercase mb-1">Installation & Setup</p>
+                            <ul class="list-disc ml-4 text-gray-400 space-y-1">
+                                <li>Owner logs in first on all maps to auto-create entries.</li>
+                                <li>Verify asset consolidation before inviting members back.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-red-400 font-bold uppercase mb-1">Avoiding Issues</p>
+                            <p class="text-gray-400">If a non-owner creates a tribe then leaves, the file bugs. Use <span class="text-cyan-400">FixTribe</span> to reset.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="input-label !text-gold mb-4">ID Discovery Guide</h3>
+                    <div class="overflow-hidden border border-white/10 rounded-lg">
+                        <table class="w-full text-[10px] text-left">
+                            <thead class="bg-white/5 text-cyan-400 uppercase">
+                                <tr><th class="p-2 border-b border-white/10">Target</th><th class="p-2 border-b border-white/10">Method</th></tr>
+                            </thead>
+                            <tbody class="text-gray-400">
+                                <tr class="border-b border-white/5"><td class="p-2 font-bold text-white">Tribe ID</td><td class="p-2">Type <code class="text-cyan-400">setcheatplayer 1</code>.</td></tr>
+                                <tr class="border-b border-white/5"><td class="p-2 font-bold text-white">Player ID</td><td class="p-2">Check "Sample #" on Implant.</td></tr>
+                                <tr><td class="p-2 font-bold text-white">Admin UI</td><td class="p-2"><code class="text-cyan-400">showmyadminmanager</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <div class="section-box">
@@ -828,11 +861,18 @@ function toggleD(id) { const e = document.getElementById(id); e.style.display = 
 
 function genEnforcer(type) {
     let cmd = "";
-    if (type === 'add') cmd = `TribeEnforcerAscended.AddPlayer ${document.getElementById('enfTID').value || "[TID]"} ${document.getElementById('enfPID').value || "[PID]"} ${document.getElementById('enfRank').value}`;
-    else if (type === 'give') cmd = `TribeEnforcerAscended.GiveToTribe ${document.getElementById('enfTarget').value || "[Target]"} ${document.getElementById('enfSource').value || "[Source]"}${document.getElementById('enfGlobal').value}`;
-    else if (type === 'fix') cmd = `TribeEnforcerAscended.FixTribe ${document.getElementById('enfFixID').value.trim()}`;
+    if (type === 'add') {
+        cmd = `TribeEnforcerAscended.AddPlayer ${document.getElementById('enfTID').value || "[TID]"} ${document.getElementById('enfPID').value || "[PID]"} ${document.getElementById('enfRank').value}`;
+    } else if (type === 'give') {
+        cmd = `TribeEnforcerAscended.GiveToTribe ${document.getElementById('enfTarget').value || "[Target]"} ${document.getElementById('enfSource').value || "[Source]"}${document.getElementById('enfGlobal').value}`;
+    } else if (type === 'fix') {
+        // This is the line that generates the FixTribe command
+        cmd = `TribeEnforcerAscended.FixTribe ${document.getElementById('enfFixID').value.trim()}`;
+    }
+    
     updateOutput(cmd);
-    sendLog(`Admin Action: TRIBE ENFORCER (${type})`, cmd);
+    // This logs it to Discord using the logic we set up earlier
+    sendLog("Tribe Enforcer Action", cmd);
 }
 
 function genShopCode() {
