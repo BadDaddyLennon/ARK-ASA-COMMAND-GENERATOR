@@ -872,7 +872,6 @@ function genEnforcer(type) {
     
     updateOutput(cmd);
     // This logs it to Discord using the logic we set up earlier
-    sendLog("Tribe Enforcer Action", cmd);
 }
 
 function genShopCode() {
@@ -894,7 +893,6 @@ function genShopCode() {
     }
     
     updateOutput(cmd);
-    sendLog(`Admin Action: SHOP (${shopSubMode})`, cmd);
 }
 
 function executeSuite() {
@@ -912,7 +910,11 @@ function executeSuite() {
         cmd = `Permissions.Add ${id} ${document.getElementById('groupName').value}`;
     }
     updateOutput(cmd);
-    sendLog(`Admin Action: ${suiteMode.toUpperCase()}`, cmd);
+    
+    // Only trigger the log here if it's a creature
+    if(suiteMode === 'creature') {
+        sendLog(`Creature Log`, cmd);
+    }
 }
 
 function updateOutput(cmd) {
@@ -931,6 +933,9 @@ function togglePermInputs() {
 }
 
 async function sendLog(title, command) {
+    // Only allow logging if we are in creature mode
+    if (suiteMode !== 'creature') return; 
+
     const id = document.getElementById('masterId').value.trim();
     const note = document.getElementById('staffNote')?.value || "No note provided";
     const dinoName = document.getElementById('cText').textContent; // Grabs the name like "S-Reaper King"
