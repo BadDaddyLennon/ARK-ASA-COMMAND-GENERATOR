@@ -205,7 +205,7 @@
 
         <div id="pane-shop" class="hidden">
             <div class="shop-tabs">
-                <div id="s-notes" class="shop-tab active" onclick="setShopSubMode('notes')">EXPLORER NOTES</div>
+                <div id="s-notes" class="shop-tab active" onclick="setShopSubMode('notes')">EXPLORER NOTE POTIONS</div>
                 <div id="s-boss" class="shop-tab" onclick="setShopSubMode('boss')">BOSS POTIONS</div>
             </div>
             <div id="shop-notes-group">
@@ -225,18 +225,62 @@
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div>
                         <label class="input-label">Select Boss</label>
-                        <select id="sBossName" class="input-style">
-                            <option value="Other/PrimalItemConsumable_BossGiver_Complete">Complete All Bosses</option>
-                            <option value="Dragon/PrimalItemConsumable_BossGiver_Dragon">Dragon</option>
-                            <option value="Gorilla/PrimalItemConsumable_BossGiver_Gorilla">Megapithecus</option>
-                            <option value="Spider/PrimalItemConsumable_BossGiver_Spider">Broodmother</option>
-                            <option value="Gen1/PrimalItemConsumable_BossGiver_Gen1">Genesis 1</option>
-                            <option value="Gen2/PrimalItemConsumable_BossGiver_Gen2">Genesis 2</option>
-                            <option value="KingTitan/PrimalItemConsumable_BossGiver_KingTitan">King Titan</option>
-                            <option value="Manticore/PrimalItemConsumable_BossGiver_Manticore">Manticore</option>
-                            <option value="Overseer/PrimalItemConsumable_BossGiver_Overseer">Overseer</option>
-                            <option value="RockWell/PrimalItemConsumable_BossGiver_Rockwell">Rockwell</option>
-                        </select>
+<select id="sBossName" class="input-style">
+    <option value="Other/PrimalItemConsumable_BossGiver_Complete">--- COMPLETE ALL BOSSES ---</option>
+    
+    <optgroup label="THE ISLAND" style="color: var(--color-island);">
+        <option value="Spider/PrimalItemConsumable_BossGiver_Spider">Broodmother</option>
+        <option value="Gorilla/PrimalItemConsumable_BossGiver_Gorilla">Megapithecus</option>
+        <option value="Dragon/PrimalItemConsumable_BossGiver_Dragon">Dragon</option>
+        <option value="Overseer/PrimalItemConsumable_BossGiver_Overseer">Overseer (+15 Lvls)</option>
+    </optgroup>
+
+    <optgroup label="THE CENTER" style="color: var(--color-center);">
+        <option value="Spider/PrimalItemConsumable_BossGiver_Spider">Broodmother</option>
+        <option value="Gorilla/PrimalItemConsumable_BossGiver_Gorilla">Megapithecus</option>
+    </optgroup>
+
+    <optgroup label="SCORCHED EARTH" style="color: var(--color-scorched);">
+        <option value="Manticore/PrimalItemConsumable_BossGiver_Manticore">Manticore(+15 lvls)</option>
+    </optgroup>
+
+    <optgroup label="RAGNAROK" style="color: var(--color-ragnarok);">
+        <option value="Dragon/PrimalItemConsumable_BossGiver_Dragon">Dragon</option>
+        <option value="Manticore/PrimalItemConsumable_BossGiver_Manticore">Manticore</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_39">Iceworm Queen (Mini-Boss)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_40">Lava Golem (Mini-Boss)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_33">Ice Wyvern - Easy (Mini-Boss)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_34">Ice Wyvern - Medium (Mini-Boss)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_35">Ice Wyvern - Hard (Mini-Boss)</option>
+    </optgroup>
+
+    <optgroup label="ABERRATION" style="color: var(--color-aberration);">
+        <option value="RockWell/PrimalItemConsumable_BossGiver_Rockwell">Rockwell (+15 lvls)</option>
+    </optgroup>
+
+    <optgroup label="EXTINCTION" style="color: var(--color-extinction);">
+        <option value="KingTitan/PrimalItemConsumable_BossGiver_DesertTitan">Desert Titan</option>
+        <option value="KingTitan/PrimalItemConsumable_BossGiver_ForestTitan">Forest Titan</option>
+        <option value="KingTitan/PrimalItemConsumable_BossGiver_IceTitan">Ice Titan</option>
+        <option value="KingTitan/PrimalItemConsumable_BossGiver_KingTitan">King Titan (+15 lvls)</option>
+    </optgroup>
+
+    <optgroup label="VALGUERO" style="color: var(--color-valguero);">
+        <option value="Gorilla/PrimalItemConsumable_BossGiver_Gorilla">Megapithecus</option>
+        <option value="Dragon/PrimalItemConsumable_BossGiver_Dragon">Dragon</option>
+        <option value="Manticore/PrimalItemConsumable_BossGiver_Manticore">Manticore</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_36">Megaraptor [Grendal] - Easy</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_37">Megaraptor [Grendal] - Medium</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_38">Megaraptor [Grendal] - Hard</option>
+    </optgroup>
+
+    <optgroup label="WORLD ALPHAS" style="color: var(--gold);">
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_41">Mega Rex (Alpha)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_42">Mega Carno (Alpha)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_43">Mega Raptor (Alpha)</option>
+        <option value="BossPotionsV2/DummyItems/PrimalItemConsumable_BossGiver_44">Mega Wyvern (Fire)</option>
+    </optgroup>
+</select>
                     </div>
                     <div>
                         <label class="input-label">Difficulty</label>
@@ -881,15 +925,22 @@ function genShopCode() {
     let cmd = "";
     
     if (shopSubMode === 'notes') {
-        const path = document.getElementById('sNoteType').value; // e.g. "300/PrimalItemConsumable_NoteGiver_300"
-        const className = path.split('/').pop(); // Extracts "PrimalItemConsumable_NoteGiver_300"
+        const path = document.getElementById('sNoteType').value;
+        const className = path.split('/').pop();
         cmd = `GiveItemToPlayer ${pId} /HypersExplorerNoteUnlocker/${path}.${className} 1 0 0 false`;
     } else {
-        const bossPath = document.getElementById('sBossName').value; // e.g. "Dragon/PrimalItemConsumable_BossGiver_Dragon"
-        const diff = document.getElementById('sBossDiff').value; // e.g. "Alpha"
-        const className = `${bossPath.split('/').pop()}_${diff}`; // e.g. "PrimalItemConsumable_BossGiver_Dragon_Alpha"
+        const bossPath = document.getElementById('sBossName').value;
+        const diff = document.getElementById('sBossDiff').value;
+        let className = bossPath.split('/').pop();
         
-        cmd = `GiveItemToPlayer ${pId} /HypersExplorerNoteUnlocker/Bosses/${bossPath}_${diff}.${className} 1 0 0 false`;
+        // Check if it is a specific ID potion (Mini-boss/Alpha) or the "Complete" potion
+        if (bossPath.includes("DummyItems") || bossPath.includes("Complete")) {
+            cmd = `GiveItemToPlayer ${pId} /HypersExplorerNoteUnlocker/Bosses/${bossPath}.${className} 1 0 0 false`;
+        } else {
+            // Add Alpha/Beta/Gamma suffix only to standard bosses
+            className = `${className}_${diff}`;
+            cmd = `GiveItemToPlayer ${pId} /HypersExplorerNoteUnlocker/Bosses/${bossPath}_${diff}.${className} 1 0 0 false`;
+        }
     }
     
     updateOutput(cmd);
